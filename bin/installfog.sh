@@ -1,41 +1,41 @@
 #!/bin/bash
 #
-#  FOG is a computer imaging solution.
-#  Copyright (C) 2007  Chuck Syperski & Jian Zhang
+#Туман - это решение для компьютерной визуализации.
+# Copyright (C) 2007 Чак Сиперски и Цзянь Чжан
 #
-#   This program is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation, either version 3 of the License, or
-#    any later version.
+# Эта программа - бесплатное программное обеспечение: вы можете перераспределить его и/или изменить
+# это в соответствии с условиями общей публичной лицензии GNU, опубликованной
+# Фонд бесплатного программного обеспечения, либо версия 3 лицензии, либо
+# любая более поздняя версия.
 #
-#   This program is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
+# Эта программа распространяется в надежде, что она будет полезна,
+# но без какой -либо гарантии;даже без предполагаемой гарантии
+# Торговая способность или пригодность для определенной цели.Увидеть
+# GNU General Public Public License для получения более подробной информации.
 #
-#   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# Вы должны были получить копию общей публичной лицензии GNU
+# вместе с этой программой.Если нет, см. <Http://www.gnu.org/licenses/>.
 #
 bindir=$(dirname $(readlink -f "$BASH_SOURCE"))
 cd $bindir
 workingdir=$(pwd)
 
 if [[ ! $EUID -eq 0 ]]; then
-    echo "FOG Installation must be run as root user"
+    echo "Установка тумана должна быть запущена как пользователь root"
     exit 1 # Fail Sudo
 fi
 
 which useradd >/dev/null 2>&1
 if [[ $? -eq 1 || $(echo $PATH | grep -o "sbin" | wc -l) -lt 2 ]]; then
-    echo "Please switch to a proper root environment to run the installer!"
-    echo "Use 'sudo -i' or 'su -' (skip the ' and note the hyphen at the end"
-    echo "of the su command as it is important to load root's environment)."
+    echo "Пожалуйста, переключитесь на правильную корневую среду, чтобы запустить установщик!"
+    echo "Используйте 'sudo -i' или 'su -' (пропустите «и обратите внимание на дефис в конце"
+    echo "команды SU, так как важно загрузить среду Root)."
     exit 1
 fi
 
 [[ -z $OS ]] && OS=$(uname -s)
 if [[ ! $(echo "$OS" | tr [:upper:] [:lower:]) =~ "linux" ]]; then
-    echo "We do not currently support Installation on non-Linux Operating Systems"
+    echo "В настоящее время мы не поддерживаем установку в операционных системах, не связанных с лининуксу"
     exit 2 # Fail OS Check
 fi 
 
@@ -135,7 +135,7 @@ while getopts "$optspec" o; do
                     ;;
                 webroot)
                     if [[ $OPTARG != *('/')* ]]; then
-                        echo -e "-$OPTARG needs a url path for access either / or /fog for example.\n\n\t\tfor example if you access fog using http://127.0.0.1/ without any trail\n\t\tset the path to /"
+                        echo -e "-$OPTARG Нужен путь URL для доступа либо /, или /тумана, например. \ n \ n \ t \ tfor Пример, если вы получите доступ к туману, используя http://127.0.0.1/ без какого -либо следа \ n \ t \ tset the Path to /"
                         usage
                         exit 2
                     fi
@@ -147,14 +147,14 @@ while getopts "$optspec" o; do
                     if [[ -f $OPTARG ]]; then
                         fogpriorconfig=$OPTARG
                     else
-                        echo "--$OPTARG requires file after"
+                        echo "--$OPTARG Требуется файл после"
                         usage
                         exit 3
                     fi
                     ;;
                 backuppath)
                     if [[ ! -d $OPTARG ]]; then
-                        echo "Path must be an existing directory"
+                        echo "Путь должен быть существующим каталогом "
                         usage
                         exit 4
                     fi
@@ -162,7 +162,7 @@ while getopts "$optspec" o; do
                     ;;
                 startrange)
                     if [[ $(validip $OPTARG) != 0 ]]; then
-                        echo "Invalid ip passed"
+                        echo "Неверный IP прошел"
                         usage
                         exit 5
                     fi
@@ -172,7 +172,7 @@ while getopts "$optspec" o; do
                     ;;
                 endrange)
                     if [[ $(validip $OPTARG) != 0 ]]; then
-                        echo "Invalid ip passed"
+                        echo "Неверный IP прошел"
                         usage
                         exit 6
                     fi
@@ -194,7 +194,7 @@ while getopts "$optspec" o; do
                     ;;
                 *)
                     if [[ $OPTERR == 1 && ${optspec:0:1} != : ]]; then
-                        echo "Unknown option: --${OPTARG}"
+                        echo "Неизвестный вариант: --${OPTARG}"
                         usage
                         exit 7
                     fi
@@ -247,7 +247,7 @@ while getopts "$optspec" o; do
             ;;
         W)
             if [[ $OPTARG != *('/')* ]]; then
-                echo -e "-$OPTARG needs a url path for access either / or /fog for example.\n\n\t\tfor example if you access fog using http://127.0.0.1/ without any trail\n\t\tset the path to /"
+                echo -e "-$OPTARG Нужен путь URL для доступа либо /, или /тумана, например. \ n \ n \ t \ tfor Пример, если вы получите доступ к туману, используя http://127.0.0.1/ без какого -либо следа \ n \ t \ tset the Path to /"
                 usage
                 exit 2
             fi
@@ -257,7 +257,7 @@ while getopts "$optspec" o; do
             ;;
         f)
             if [[ ! -f $OPTARG ]]; then
-                echo "-$OPTARG requires a file to follow"
+                echo "-$OPTARG Требуется файл, которому нужно следовать"
                 usage
                 exit 3
             fi
@@ -265,7 +265,7 @@ while getopts "$optspec" o; do
             ;;
         B)
             if [[ ! -d $OPTARG ]]; then
-                echo "Path must be an existing directory"
+                echo "Путь должен быть существующим каталогом"
                 usage
                 exit 4
             fi
@@ -273,7 +273,7 @@ while getopts "$optspec" o; do
             ;;
         s)
             if [[ $(validip $OPTARG) != 0 ]]; then
-                echo "Invalid ip passed"
+                echo "Неверный IP прошел"
                 usage
                 exit 5
             fi
@@ -283,7 +283,7 @@ while getopts "$optspec" o; do
             ;;
         e)
             if [[ $(validip $OPTARG) != 0 ]]; then
-                echo "Invalid ip passed"
+                echo "Неверный IP прошел"
                 usage
                 exit 6
             fi
@@ -305,20 +305,20 @@ while getopts "$optspec" o; do
             ;;
         N)
             if [[ -z $OPTARG ]]; then
-                echo "Please specify a database name"
+                echo "Укажите имя базы данных"
                 usage
                 exit 4
             fi
             smysqldbname=$OPTARG
             ;;
         :)
-            echo "Option -$OPTARG requires a value"
+            echo "Вариант -$OPTARG требует значенияe"
             usage
             exit 8
             ;;
         *)
             if [[ $OPTERR == 1 && ${optspec:0:1} != : ]]; then
-                echo "Unknown option: -$OPTARG"
+                echo "Неизвестный вариант: -$OPTARG"
                 usage
                 exit 7
             fi
@@ -399,14 +399,14 @@ if [[ -z $* || $* != +(-h|-?|--help|--uninstall) ]]; then
     exec &> >(tee -a "$workingdir/error_logs/foginstall.log")
 fi
 displayBanner
-echo -e "   Version: $version Installer/Updater\n"
+echo -e "   Versio:n $version Installer/Updater\n"
 checkSELinux
 checkFirewall
 case $doupdate in
     1)
         if [[ -f $fogpriorconfig ]]; then
-            echo -e "\n * Found FOG Settings from previous install at: $fogprogramdir/.fogsettings\n"
-            echo -n " * Performing upgrade using these settings"
+            echo -e "\n *Найдены настройки тумана из предыдущей установки по адресу: $fogprogramdir/.fogsettings\n"
+            echo -n " * Выполнение обновления с использованием этих настроек"
             . "$fogpriorconfig"
             doOSSpecificIncludes
             [[ -n $sblexports ]] && blexports=$sblexports
@@ -419,7 +419,7 @@ case $doupdate in
         fi
         ;;
     *)
-        echo -e "\n * FOG Installer will NOT attempt to upgrade from\n    previous version of FOG."
+        echo -e "\n * Установщик тумана не будет пытаться обновить с\n   Предыдущая версия тумана."
         ;;
 esac
 # evaluation of command line options
@@ -456,32 +456,32 @@ fi
 . ../lib/common/newinput.sh
 echo
 echo "   ######################################################################"
-echo "   #     FOG now has everything it needs for this setup, but please     #"
-echo "   #   understand that this script will overwrite any setting you may   #"
-echo "   #   have setup for services like DHCP, apache, pxe, tftp, and NFS.   #"
+echo "   #    У тумана теперь есть все, что ему нужно для этой настройки, но, пожалуйста    #"
+echo "   #   Поймите, что этот скрипт перезаписывает любую настройку, которые вы можете  #"
+echo "   #   Настройка для таких услуг, как DHCP, Apache, PXE, TFTP и NFS.   #"
 echo "   ######################################################################"
-echo "   # It is not recommended that you install this on a production system #"
-echo "   #        as this script modifies many of your system settings.       #"
+echo "   #     Не рекомендуется устанавливать это на производственную систему #"
+echo "   #        Поскольку этот скрипт изменяет многие из настроек вашей системы.     #"
 echo "   ######################################################################"
-echo "   #             This script should be run by the root user.            #"
-echo "   #      It will prepend the running with sudo if root is not set      #"
+echo "   #          Этот скрипт должен запускать пользователем root.          #"
+echo "   #      Он будет подготовить бег с Sudo, если root не установлен    #"
 echo "   ######################################################################"
-echo "   #            Please see our wiki for more information at:            #"
+echo "   #           Пожалуйста, смотрите нашу вики для получения дополнительной информации по адресу:         #"
 echo "   ######################################################################"
 echo "   #             https://wiki.fogproject.org/wiki/index.php             #"
 echo "   ######################################################################"
 echo
-echo " * Here are the settings FOG will use:"
-echo " * Base Linux: $osname"
-echo " * Detected Linux Distribution: $linuxReleaseName"
-echo " * Interface: $interface"
-echo " * Server IP Address: $ipaddress"
-echo " * Server Subnet Mask: $submask"
-echo " * Hostname: $hostname"
+echo " * Вот настройки, которые туман будет использовать:"
+echo " * Базовый Linux: $osname"
+echo " * Обнаружено распределение Linux: $linuxReleaseName"
+echo " * Интерфейс: $interface"
+echo " * IP-адрес сервера: $ipaddress"
+echo " * Маска подсети сервера: $submask"
+echo " * Имя хоста: $hostname"
 case $installtype in
     N)
-        echo " * Installation Type: Normal Server"
-        echo -n " * Internationalization: "
+        echo " * Тип установки: нормальный сервер"
+        echo -n " * Интернационализация: "
         case $installlang in
             1)
                 echo "Yes"
@@ -490,34 +490,34 @@ case $installtype in
                 echo "No"
                 ;;
         esac
-        echo " * Image Storage Location: $storageLocation"
+        echo " * Место хранения изображений: $storageLocation"
         case $bldhcp in
             1)
-                echo " * Using FOG DHCP: Yes"
-                echo " * DHCP router Address: $plainrouter"
+                echo " * Используя FOG DHCP: Yes"
+                echo " *Адрес маршрутизатора DHCP: $plainrouter"
                 ;;
             *)
-                echo " * Using FOG DHCP: No"
-                echo " * DHCP will NOT be setup but you must setup your"
-                echo " | current DHCP server to use FOG for PXE services."
+                echo " *Используя FOG DHCP: No"
+                echo " * DHCP не будет настроен, но вы должны настроить свой"
+                echo " | Текущий сервер DHCP для использования FOG для сервисов PXE."
                 echo
-                echo " * On a Linux DHCP server you must set: next-server and filename"
+                echo " * На сервере Linux DHCP вы должны установить: Next-Server и Filename"
                 echo
-                echo " * On a Windows DHCP server you must set options 066 and 067"
+                echo " * На сервере Windows DHCP вы должны установить параметры 066 и 067"
                 echo
-                echo " * Option 066/next-server is the IP of the FOG Server: (e.g. $ipaddress)"
-                echo " * Option 067/filename is the bootfile: (e.g. undionly.kkpxe or snponly.efi)"
+                echo " * Вариант 066/Next-Server-это IP на FOG-сервере: (e.g. $ipaddress)"
+                echo " * Вариант 067/Имя файла - BootFile: (например, unionly.kkpxe или snponly.efi)"
                 ;;
         esac
         ;;
     S)
-        echo " * Installation Type: Storage Node"
+        echo " * Тип установки: Storage Node"
         echo " * Node IP Address: $ipaddress"
         echo " * MySQL Database Host: $snmysqlhost"
         echo " * MySQL Database User: $snmysqluser"
         ;;
 esac
-echo -n " * Send OS Name, OS Version, and FOG Version: "
+echo -n " * Отправить имя ОС, версию ОС и версия тумана: "
 case $sendreports in
     Y)
         echo "Yes"
@@ -531,13 +531,13 @@ while [[ -z $blGo ]]; do
     echo
     [[ -n $autoaccept ]] && blGo="y"
     if [[ -z $autoaccept ]]; then
-        echo -n " * Are you sure you wish to continue (Y/N) "
+        echo -n " * Вы уверены, что хотите продолжить(Y/N) "
         read blGo
     fi
     echo
     case $blGo in
         [Yy]|[Yy][Ee][Ss])
-            echo " * Installation Started"
+            echo " * Установка началась"
             echo
             checkInternetConnection
             if [[ $ignorehtmldoc -eq 1 ]]; then
@@ -557,11 +557,11 @@ while [[ -z $blGo ]]; do
             esac
             installPackages
             echo
-            echo " * Confirming package installation"
+            echo " *Подтверждение установки пакета "
             echo
             confirmPackageInstallation
             echo
-            echo " * Configuring services"
+            echo " * Настройка сервисов"
             echo
             if [[ -z $storageLocation ]]; then
                 case $autoaccept in
@@ -570,11 +570,11 @@ while [[ -z $blGo ]]; do
                         ;;
                     *)
                         echo
-                        echo -n " * What is the storage location for your images directory? (/images) "
+                        echo -n " *Какое местоположение хранилища для вашего каталога изображений? (/images) "
                         read storageLocation
                         [[ -z $storageLocation ]] && storageLocation="/images"
                         while [[ ! -d $storageLocation && $storageLocation != "/images" ]]; do
-                            echo -n " * Please enter a valid directory for your storage location (/images) "
+                            echo -n " * Пожалуйста, введите действительный каталог для вашего места хранения (/images) "
                             read storageLocation
                             [[ -z $storageLocation ]] && storageLocation="/images"
                         done
@@ -601,24 +601,24 @@ while [[ -z $blGo ]]; do
                     linkOptFogDir
                     if [[ $bluseralreadyexists == 1 ]]; then
                         echo
-                        echo "\n * Upgrade complete\n"
+                        echo "\n * Обновление завершено\n"
                         echo
                     else
                         registerStorageNode
                         updateStorageNodeCredentials
                         [[ -n $snmysqlhost ]] && fogserver=$snmysqlhost || fogserver="fog-server"
                         echo
-                        echo " * Setup complete"
+                        echo " * Настройка завершена"
                         echo
                         echo
-                        echo " * You still need to setup this node in the fog management "
-                        echo " | portal. You will need the username and password listed"
+                        echo " * Вам все еще нужно настроить этот узел в управлении туманом "
+                        echo " | портал.Вам понадобится перечислено имя пользователя и пароль"
                         echo " | below."
                         echo
                         echo " * Management Server URL:"
                         echo "   ${httpproto}://${fogserver}${webroot}"
                         echo
-                        echo "   You will need this, write this down!"
+                        echo "   Вам это понадобится, запишите это!"
                         echo "   IP Address:          $ipaddress"
                         echo "   Interface:           $interface"
                         echo "   Management Username: $username"
@@ -647,17 +647,17 @@ while [[ -z $blGo ]]; do
                     updateStorageNodeCredentials
                     setupFogReporting
                     echo
-                    echo " * Setup complete"
+                    echo " * Настройка завершена"
                     echo
-                    echo "   You can now login to the FOG Management Portal using"
-                    echo "   the information listed below.  The login information"
-                    echo "   is only if this is the first install."
+                    echo "Теперь вы можете войти в портал управления FOG, используя"
+                    echo "информация, перечисленная ниже."
+                    echo "это только в том случае, если это первая установка".
                     echo
-                    echo "   This can be done by opening a web browser and going to:"
+                    echo "   Это можно сделать, открыв веб -браузер и поступив на:"
                     echo
                     echo "   ${httpproto}://${ipaddress}${webroot}management"
                     echo
-                    echo "   Default User Information"
+                    echo "   Информация пользователя по умолчанию"
                     echo "   Username: fog"
                     echo "   Password: password"
                     echo
@@ -666,22 +666,22 @@ while [[ -z $blGo ]]; do
             [[ -d $webdirdest/maintenance ]] && rm -rf $webdirdest/maintenance
             ;;
         [Nn]|[Nn][Oo])
-            echo " * FOG installer exited by user request"
+            echo " * Установщик FOG выходит по запросу пользователя"
             exit 0
             ;;
         *)
             echo
-            echo " * Sorry, answer not recognized"
+            echo " * Извините, ответ не признан"
             echo
             exit 1
             ;;
     esac
 done
 if [[ -n "${backupconfig}" ]]; then
-    echo " * Changed configurations:"
+    echo " * Изменены конфигурации:"
     echo
-    echo "   The FOG installer changed configuration files and created the"
-    echo "   following backup files from your original files:"
+    echo "   Установщик FOG изменил файлы конфигурации и создал"
+    echo "   Следующие файлы резервного копирования из ваших исходных файлов:"
     for conffile in ${backupconfig}; do
         echo "   * ${conffile} <=> ${conffile}.${timestamp}"
     done
